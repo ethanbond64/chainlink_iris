@@ -1,0 +1,56 @@
+version: '2'
+
+services:
+  postgres:
+    image: 'postgres:9.5'
+    env_file:
+      - '.env'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+
+  server:
+    build: .
+    command: > 
+      gunicorn -b 0.0.0.0:8000 
+        --access-logfile -
+        --reload
+        "server.app:create_app()"
+    env_file:
+      - '.env'
+    volumes:
+      - '.:/server'
+    ports:
+      - '8000:8000'
+
+  # frontend:
+  #   build: './chiafrontend'
+  #   command: npm run start
+  #   stdin_open: true
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - './chiafrontend/:/chiafrontend'
+  #     - '/chiafrontend/node_modules'
+
+  celery:
+    build: .
+    command: celery worker -l info -A server.blueprints.main.tasks
+    env_file:
+      - '.env'
+    volumes:
+      - '.:/server'
+
+  redis:
+    image: 'redis:3.0-alpine'
+    command: redis-server --requirepass templocalpass
+    volumes:
+      - 'redis:/var/lib/redis/data'
+    ports:
+      - '6379:6379'
+
+
+volumes:
+  postgres:
+  redis:

@@ -1,0 +1,1 @@
+Build the db model first, then build the API, then draft the smart contract, then build the UI

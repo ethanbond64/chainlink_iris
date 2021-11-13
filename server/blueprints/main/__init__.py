@@ -1,0 +1,1 @@
+from server.blueprints.main.views import main
