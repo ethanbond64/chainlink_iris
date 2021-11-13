@@ -11,7 +11,7 @@ services:
       - '5432:5432'
 
   server:
-    build: .
+    build: backend/.
     command: > 
       gunicorn -b 0.0.0.0:8000 
         --access-logfile -
@@ -20,7 +20,7 @@ services:
     env_file:
       - '.env'
     volumes:
-      - '.:/server'
+      - './backend:/server'
     ports:
       - '8000:8000'
 
@@ -35,12 +35,12 @@ services:
   #     - '/chiafrontend/node_modules'
 
   celery:
-    build: .
+    build: backend/.
     command: celery worker -l info -A server.blueprints.main.tasks
     env_file:
       - '.env'
     volumes:
-      - '.:/server'
+      - './backend:/server'
 
   redis:
     image: 'redis:3.0-alpine'
