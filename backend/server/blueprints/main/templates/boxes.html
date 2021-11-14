@@ -112,29 +112,26 @@
 </style>
 
 <script>
-    var d = new Date();
-    var seconds = Math.round(d.getTime() / 1000);
-    var mod = seconds % (2 ** 25)
+    (function() {
+        setInterval(function() {
+            let d = new Date();
+            let seconds = Math.round(d.getTime() / 1000);
+            let mod = seconds % (2 ** 25)
 
-    console.log(seconds,mod);
-    // let bin = "1101100010100010101001000";
+            let bin = (mod >>> 0).toString(2);
 
-    let bin = int_to_bin(mod);
-    
-    if (bin.length < 25){
-        bin = "0".repeat(bin.length-25) + bin;
-    }
-    
-    for (let i=0;i<25;i++) {
-        let box = document.getElementById(i.toString());
-        if (bin.charAt(i) === "0") {
-            box.style.background = "white";
-        }
-    }
+            if (bin.length < 25) {
+                bin = "0".repeat(bin.length - 25) + bin;
+            }
 
-
-    function int_to_bin(dec) {
-        return (dec >>> 0).toString(2);
-    }
+            for (let i = 0; i < 25; i++) {
+                if (bin.charAt(i) === "0") {
+                    document.getElementById(i.toString()).style.background = "white";
+                } else {
+                    document.getElementById(i.toString()).style.background = "black";
+                }
+            }
+        },300);
+    })()
 
 </script>
