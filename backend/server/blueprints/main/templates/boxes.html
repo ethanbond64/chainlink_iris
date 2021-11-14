@@ -88,36 +88,53 @@
 
 <style>
     table {
-    width: 50%;
+        margin: auto;
+        width: 50%;
     /* height: 100vh; */
     }
     td {
-    width: 20%;
-    position: relative;
+        width: 20%;
+        position: relative;
     }
     td:after {
-    content: '';
-    display: block;
-    margin-top: 100%;
+        content: '';
+        display: block;
+        margin-top: 100%;
     }
     td .content {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: black;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: black;
     }
 </style>
 
 <script>
-    let bin = "1101100010100010101001000";
+    var d = new Date();
+    var seconds = Math.round(d.getTime() / 1000);
+    var mod = seconds % (2 ** 25)
+
+    console.log(seconds,mod);
+    // let bin = "1101100010100010101001000";
+
+    let bin = int_to_bin(mod);
+    
+    if (bin.length < 25){
+        bin = "0".repeat(bin.length-25) + bin;
+    }
     
     for (let i=0;i<25;i++) {
         let box = document.getElementById(i.toString());
         if (bin.charAt(i) === "0") {
             box.style.background = "white";
         }
+    }
+
+
+    function int_to_bin(dec) {
+        return (dec >>> 0).toString(2);
     }
 
 </script>
