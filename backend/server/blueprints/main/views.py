@@ -1,9 +1,7 @@
 from flask import render_template, request, Blueprint, json, jsonify, make_response, render_template_string
 from server.blueprints.main.models import Event, Entry
 from flask_cors import CORS
-from requests import get
 import datetime
-import os
 
 from server.blueprints.main.models import Event
 

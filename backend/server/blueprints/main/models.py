@@ -19,6 +19,8 @@ class Event(BaseModel,db.Model):
     # dataInPolicy = db.Column(JSON)
     # dataOutPolicy = db.Column(JSON)
 
+    # Number of people that need to submit confirming data for it to be true
+    required_confirmations = db.Column(db.Integer)
 
 class Entry(BaseModel,db.Model):
 

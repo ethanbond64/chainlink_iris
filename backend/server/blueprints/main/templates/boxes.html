@@ -1,0 +1,123 @@
+<table>
+    <tr>
+        <td>
+            <div class="content" id="0"></div>
+        </td>
+        <td>
+            <div class="content" id="1"></div>
+        </td>
+        <td>
+            <div class="content" id="2"></div>
+        </td>
+        <td>
+            <div class="content" id="3"></div>
+        </td>
+        <td>
+            <div class="content" id="4"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="content" id="5"></div>
+        </td>
+        <td>
+            <div class="content" id="6"></div>
+        </td>
+        <td>
+            <div class="content" id="7"></div>
+        </td>
+        <td>
+            <div class="content" id="8"></div>
+        </td>
+        <td>
+            <div class="content" id="9"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="content" id="10"></div>
+        </td>
+        <td>
+            <div class="content" id="11"></div>
+        </td>
+        <td>
+            <div class="content" id="12"></div>
+        </td>
+        <td>
+            <div class="content" id="13"></div>
+        </td>
+        <td>
+            <div class="content" id="14"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="content" id="15"></div>
+        </td>
+        <td>
+            <div class="content" id="16"></div>
+        </td>
+        <td>
+            <div class="content" id="17"></div>
+        </td>
+        <td>
+            <div class="content" id="18"></div>
+        </td>
+        <td>
+            <div class="content" id="19"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="content" id="20"></div>
+        </td>
+        <td>
+            <div class="content" id="21"></div>
+        </td>
+        <td>
+            <div class="content" id="22"></div>
+        </td>
+        <td>
+            <div class="content" id="23"></div>
+        </td>
+        <td>
+            <div class="content" id="24"></div>
+        </td>
+    </tr>
+<table>
+
+<style>
+    table {
+    width: 50%;
+    /* height: 100vh; */
+    }
+    td {
+    width: 20%;
+    position: relative;
+    }
+    td:after {
+    content: '';
+    display: block;
+    margin-top: 100%;
+    }
+    td .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    }
+</style>
+
+<script>
+    let bin = "1101100010100010101001000";
+    
+    for (let i=0;i<25;i++) {
+        let box = document.getElementById(i.toString());
+        if (bin.charAt(i) === "0") {
+            box.style.background = "white";
+        }
+    }
+
+</script>
