@@ -1,6 +1,6 @@
 from server.utils.extensions import db
 from server.utils.BaseModel import BaseModel
-# from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.dialects.postgresql import JSON
 
 class Event(BaseModel,db.Model):
 
@@ -13,4 +13,19 @@ class Event(BaseModel,db.Model):
 
     expiration = db.Column(db.DateTime())
 
-    # TODO data in/out policy
+    # keys are names, values are types
+    # nested types nest
+    dataPolicy = db.Column(JSON)
+    # dataInPolicy = db.Column(JSON)
+    # dataOutPolicy = db.Column(JSON)
+
+
+class Entry(BaseModel,db.Model):
+
+    __tablename__ = 'entries'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), index=True, nullable=False)
+
+    data = db.Column(JSON)
