@@ -78,8 +78,8 @@ def find_grid(img):
 
             # We can be fairly certain we found a sudoku grid if the grid contains 81 cells
             print(len(cells))
-            # if len(cells) == 25:
-            return True, warped, M
+            if len(cells) == 25:
+                return True, warped, M
 
     return False, None, None
 
@@ -166,7 +166,7 @@ def order_points_of_quadrilateral(pts):
 
 # MAIN
 
-img = cv2.imread('base4.png')
+img = cv2.imread('base5.png')
 print(type(img))
 
 # Ensure we keep the aspect ratio of the image
