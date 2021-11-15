@@ -24,13 +24,13 @@ bin_rep = ""
 
 # contours.sort(key=lambda r: [int(nearest * round(float(r[1]) / nearest)), r[0]])
 
-# contours = cnts.sort_contours(contours, method="top-to-bottom")[0]
+# contours = cnts.sort_contours(contours, method="left-to-right")[0]
 print(len(contours))
 for c in contours:
     # print(c)
     print(img[c[0][0][0]+20][c[0][0][1]+20],img[c[0][0][0]+20][c[0][0][1]+20][0] != 255)
-    img = cv2.circle(img, (c[0][0][0]+20,c[0][0][1]+20), 5, (0, 0, 255), 2)
-    if img[c[0][0][0]+20][c[0][0][1]+20][0] != 255:
+    img = cv2.circle(img, (c[0][0][1]+20,c[0][0][0]+20), 5, (0, 0, 255), 2)
+    if img[c[0][0][1]+20][c[0][0][0]+20][0] != 255:
         bin_rep += "1"
     else:
         bin_rep += "0"
