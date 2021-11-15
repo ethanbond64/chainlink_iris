@@ -5,7 +5,7 @@ import datetime
 
 from server.blueprints.main.models import Event
 
-main = Blueprint('main', __name__)
+main = Blueprint('main', __name__,template_folder='templates')
 
 CORS(main,origins="http://localhost:3000")
 
@@ -59,3 +59,7 @@ def get_entries(event):
     resp = {"entries":[entry.json() for entry in entries]}
 
     return make_response(jsonify(resp),200)
+
+@main.route('/timebox',methods=['GET'])
+def view_timebox():
+    return render_template('timebox.html')
