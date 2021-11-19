@@ -1,7 +1,12 @@
-from flask import render_template, request, Blueprint, json, jsonify, make_response, render_template_string
+from flask import render_template, request, Blueprint, json, jsonify, make_response, render_template_string, Response
 from server.blueprints.main.models import Event, Entry
 from flask_cors import CORS
 import datetime
+from server.utils.extensions import socketio
+from flask_socketio import emit
+from server.blueprints.main.camera import Camera, Makeup_artist
+
+camera = Camera(Makeup_artist())
 
 from server.blueprints.main.models import Event
 
@@ -63,3 +68,42 @@ def get_entries(event):
 @main.route('/timebox',methods=['GET'])
 def view_timebox():
     return render_template('timebox.html')
+
+# Video rts
+@main.route('/',methods=['GET'])
+def stream_video():
+    return render_template('index.html')
+
+def gen():
+    """Video streaming generator function."""
+
+    # app.logger.info("starting to generate frames!")
+    while True:
+        frame = camera.get_frame() #pil_image_to_base64(camera.get_frame())
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
+@main.route('/video_feed')
+def video_feed():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@socketio.on('input image', namespace='/test')
+def test_message(input):
+    print("YOOOOOOO")
+    input = input.split(",")[1]
+    camera.enqueue_input(input)
+    image_data = input # Do your magical Image processing here!!
+    #image_data = image_data.decode("utf-8")
+    image_data = "data:image/jpeg;base64," + image_data
+    print("OUTPUT " + image_data)
+    emit('out-image-event', {'image_data': image_data}, namespace='/test')
+    #camera.enqueue_input(base64_to_pil_image(input))
+
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    print("YOOO CONNECT")
+    # app.logger.info("client connected")

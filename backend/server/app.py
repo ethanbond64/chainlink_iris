@@ -1,6 +1,6 @@
 from celery import Celery
 from flask import Flask
-from server.utils.extensions import db
+from server.utils.extensions import db, socketio
 from server.blueprints.main import main
 
 def create_app():
@@ -12,6 +12,7 @@ def create_app():
     # TODO fix this for first run
     db.create_all(app=app)
     app.register_blueprint(main)
+    socketio.init_app(app)
 
     return app
 
