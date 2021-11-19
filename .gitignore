@@ -4,5 +4,5 @@ venv
 *.sym
 .todo
 .DS_Store
-.env
 backend/server/.DS_Store
+.env
