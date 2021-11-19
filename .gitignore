@@ -5,4 +5,6 @@ venv
 .todo
 .DS_Store
 backend/server/.DS_Store
+*.env
 .env
+
