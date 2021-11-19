@@ -82,12 +82,12 @@
 
             socket.emit('output image')
 
-            var img = new Image();
+            // var img = new Image();
             socket.on('out-image-event', function (data) {
 
-
-                img.src = dataURL//data.image_data
-                photo.setAttribute('src', data.image_data);
+                console.log("Frame count: ", data.image_data);
+                // img.src = dataURL//data.image_data
+                // photo.setAttribute('src', data.image_data);
 
             });
 

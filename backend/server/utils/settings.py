@@ -4,7 +4,8 @@ from datetime import timedelta
 DEBUG=True
 SECRET_KEY='temp'
 REMEMBER_COOKIE_DURATION=timedelta(days=90)
-SERVER_NAME='localhost:8000'
+# SERVER_NAME='localhost:8000'
+SERVER_NAME='10.0.0.243:8000'
 SQLALCHEMY_DATABASE_URI = os.getenv('DB_URI')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 

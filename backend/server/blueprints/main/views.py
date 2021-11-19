@@ -4,9 +4,9 @@ from flask_cors import CORS
 import datetime
 from server.utils.extensions import socketio
 from flask_socketio import emit
-from server.blueprints.main.camera import Camera, Makeup_artist
+from server.blueprints.main.camera import Camera
 
-camera = Camera(Makeup_artist())
+camera = Camera()
 
 from server.blueprints.main.models import Event
 
@@ -79,27 +79,26 @@ def gen():
 
     # app.logger.info("starting to generate frames!")
     while True:
-        frame = camera.get_frame() #pil_image_to_base64(camera.get_frame())
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        frame_data = camera.get_frame_data() #pil_image_to_base64(camera.get_frame())
+        yield frame_data
 
 
-@main.route('/video_feed')
+@main.route('/video_info')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @socketio.on('input image', namespace='/test')
-def test_message(input):
+def test_message(img):
     print("YOOOOOOO")
-    input = input.split(",")[1]
-    camera.enqueue_input(input)
-    image_data = input # Do your magical Image processing here!!
+    img = img.split(",")[1]
+    camera.enqueue_input(img)
+    # image_data = input # Do your magical Image processing here!!
     #image_data = image_data.decode("utf-8")
-    image_data = "data:image/jpeg;base64," + image_data
-    print("OUTPUT " + image_data)
-    emit('out-image-event', {'image_data': image_data}, namespace='/test')
+    # image_data = "data:image/jpeg;base64," + image_data
+    # print("OUTPUT " + image_data)
+    emit('out-image-event', {'image_data': camera.count}, namespace='/test')
     #camera.enqueue_input(base64_to_pil_image(input))
 
 
