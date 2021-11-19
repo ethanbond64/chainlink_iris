@@ -2,8 +2,11 @@
 
 FROM python:3.7.5-slim-buster
 
-RUN apt-get update && apt-get install -qq -y \
+RUN apt-get update 
+RUN apt-get install -qq -y \
     build-essential libpq-dev --no-install-recommends
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+
 
 ENV SERVER_PATH /server
 RUN mkdir -p $SERVER_PATH

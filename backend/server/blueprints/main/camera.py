@@ -6,7 +6,7 @@ from PIL import Image
 
 class Camera():
     def __init__(self):
-        self.count = 0
+        self.valid = False
         self.to_process = []
         self.to_output = []
 
@@ -19,11 +19,12 @@ class Camera():
         if not self.to_process:
             return
 
+        print(type(self.to_process.pop(0)))
         # input is an ascii string. 
-        input_str = self.to_process.pop(0)
+        # input_str = self.to_process.pop(0)
 
         # convert it to a pil image
-        input_img = base64_to_pil_image(input_str)
+        # input_img = base64_to_pil_image(input_str)
 
         ################## where the hard work is done ############
         # output_img is an PIL image

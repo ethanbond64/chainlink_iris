@@ -1,3 +1,4 @@
+from cv2 import imread, GaussianBlur, Canny, findContours, RETR_TREE, CHAIN_APPROX_SIMPLE
 import datetime
 import random
 import pickle
@@ -7,6 +8,7 @@ PERIOD_SIZE = (2**25)
 EPOCH = datetime.datetime.utcfromtimestamp(0)
 # event_datetime is field on event record in db
 # entry mod is the numeric value of the identifier
+
 def get_entry_timestamp(event_datetime,entry_mod):
     
     event_start = datetime_to_seconds(event_datetime)
@@ -39,5 +41,19 @@ def generate_time_id_map():
 
     with open(abs_file_path,'wb') as f:
         pickle.dump(int_list, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+def img_to_bin(img):
+    blurred = GaussianBlur(img, (5, 5), 0) # Blur
+    canny = Canny(blurred, 30, 150) # Canny
+    contours, _ = findContours(canny,RETR_TREE,CHAIN_APPROX_SIMPLE)
+    contours = contours[0::len(contours)//25]
+    bin_rep = ""
+    for c in contours:
+        if img[c[0][0][1]+5][c[0][0][0]+5][0] != 255:
+            bin_rep += "1"
+        else:
+            bin_rep += "0"
+    bin_rep = bin_rep[::-1]
+    return bin_rep
 
     

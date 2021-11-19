@@ -77,7 +77,8 @@
 
             ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 300, 150);
 
-            let dataURL = canvas.toDataURL('image/jpeg');
+            // Default PNG
+            let dataURL = canvas.toDataURL();
             socket.emit('input image', dataURL);
 
             socket.emit('output image')
@@ -111,7 +112,7 @@
 
             setInterval(function () {
                 sendSnapshot();
-            }, 50);
+            }, 100);
         }).catch(function (error) {
             console.log(error);
         });
