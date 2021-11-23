@@ -61,7 +61,7 @@
 </html>
 <script>
  $(document).ready(function () {
-        let namespace = "/test";
+        let namespace = "/iris";
         let video = document.querySelector("#videoElement");
         let canvas = document.querySelector("#canvasElement");
         let ctx = canvas.getContext('2d');
@@ -78,17 +78,16 @@
             ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 300, 150);
 
             // Default PNG
-            let dataURL = canvas.toDataURL();
-            socket.emit('input image', dataURL);
+            let payload = {"DataURL": canvas.toDataURL(),"EventID": parseInt(window.location.pathname.split('/')[2])};
+            socket.emit('VideoStreamIn', payload);
 
             socket.emit('output image')
 
             // var img = new Image();
-            socket.on('out-image-event', function (data) {
+            socket.on('VideoStreamReceived', function (data) {
 
-                console.log("Frame count: ", data.image_data);
-                // img.src = dataURL//data.image_data
-                // photo.setAttribute('src', data.image_data);
+                console.log("RESPONSE", data);
+                // img.src = dataURL//data.image_data                // photo.setAttribute('src', data.image_data);
 
             });
 
@@ -112,7 +111,7 @@
 
             setInterval(function () {
                 sendSnapshot();
-            }, 100);
+            }, 800);
         }).catch(function (error) {
             console.log(error);
         });
