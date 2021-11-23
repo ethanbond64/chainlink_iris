@@ -99,6 +99,20 @@ def stream_video():
 #     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+@socketio.on('VideoStreamIn', namespace='/iris')
+def stream_in(data):
+    
+    data_url = data["DataURL"]
+    event_id = data["EventID"]
+
+    # get event
+    event = Event.query.filter(Event.event_id==event_id).first()
+
+    # Process and save data
+
+    emit('VideoStreamReceived', {'Valid': True}, namespace='/iris')
+
+
 @socketio.on('input image', namespace='/test')
 def test_message(data_url):
 
