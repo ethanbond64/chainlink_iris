@@ -60,6 +60,12 @@
 
 </html>
 <script>
+
+// Fingerprinter
+const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3').then(FingerprintJS => FingerprintJS.load());
+var fingerprint = null;            
+fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
+
  $(document).ready(function () {
         let namespace = "/iris";
         let video = document.querySelector("#videoElement");
@@ -77,21 +83,17 @@
 
             ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 300, 150);
 
-            // Default PNG
-            let payload = {"DataURL": canvas.toDataURL(),"EventID": parseInt(window.location.pathname.split('/')[2])};
+            let payload = {
+                "DataURL": canvas.toDataURL(), // Default PNG
+                "EventID": parseInt(window.location.pathname.split('/')[2]),
+                "DeviceID": fingerprint
+            };
             socket.emit('VideoStreamIn', payload);
-
-            socket.emit('output image')
 
             // var img = new Image();
             socket.on('VideoStreamReceived', function (data) {
-
                 console.log("RESPONSE", data);
-                // img.src = dataURL//data.image_data                // photo.setAttribute('src', data.image_data);
-
             });
-
-
         }
 
         socket.on('connect', function () {

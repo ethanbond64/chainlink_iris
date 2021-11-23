@@ -98,6 +98,7 @@ def stream_in(data):
     
     data_url = data["DataURL"]
     event_id = data["EventID"]
+    device_id = data["DeviceID"]
 
     # get event
     event = Event.query.filter(Event.id==event_id).first()
@@ -107,7 +108,7 @@ def stream_in(data):
         emit('VideoStreamReceived', {'Valid': False}, namespace='/iris')
     # Process and save data
     img = stringToImage(data_url.split(",")[1])
-    save_event_record(img,event)
+    save_event_record(img,device_id,event)
  
     emit('VideoStreamReceived', {'Valid': True}, namespace='/iris')
 

@@ -33,7 +33,7 @@ class Entry(BaseModel,db.Model):
 
     data = db.Column(JSON)
     timestamp = db.Column(db.DateTime(),index=True)
-    # device_signature = db.Column(db.String(128))
+    device_signature = db.Column(db.String(128))
 
 
 # class Event_Entry_Xref(BaseModel,db.Model):

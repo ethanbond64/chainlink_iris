@@ -1,10 +1,11 @@
 
 import datetime
+from os import device_encoding
 from server.blueprints.main.models import Event, Entry
 
 from server.blueprints.main.time_handler import img_to_bin, get_entry_timestamp
 
-def save_event_record(img, event: Event):
+def save_event_record(img, device_id, event: Event):
 
     # Check event is still valid
     if event.expiration < datetime.datetime.now() or event.start_time > datetime.datetime.now():
@@ -25,4 +26,4 @@ def save_event_record(img, event: Event):
     generated_json = {"data":"fake"}
 
     # save an entry for the event
-    Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id).save()
+    Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id,device_signature=device_id).save()
