@@ -80,6 +80,16 @@ def view_timebox():
 def stream_video(event_id):
     return render_template('index.html',event_id=event_id)
 
+@main.route('/V1/latest/<event_id>')
+def latest_entries(event_id):
+    payload = {"entries":[e.json() for e in Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).limit(5)]}
+    return make_response(jsonify(payload),200)
+
+# TODO 
+# RT all between timestamps
+# RT specfic timestamp
+# RT require x confirmations
+
 
 @socketio.on('VideoStreamIn', namespace='/iris')
 def stream_in(data):

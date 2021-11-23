@@ -1,6 +1,6 @@
 
 import datetime
-from server.blueprints.main.models import Event, Entry, Event_Entry_Xref
+from server.blueprints.main.models import Event, Entry
 
 from server.blueprints.main.time_handler import img_to_bin, get_entry_timestamp
 
@@ -25,7 +25,4 @@ def save_event_record(img, event: Event):
     generated_json = {"data":"fake"}
 
     # save an entry for the event
-    entry = Entry(data=generated_json,timestamp=auth_timestamp).save()
-
-    # save in the xref
-    Event_Entry_Xref(entry_id=entry.id,event_id=event.id).save()
+    Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id).save()
