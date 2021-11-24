@@ -14,12 +14,12 @@ def generate_contract():
 
 
 @generator.route('/view/contract')
-def generate_contract():
+def view_contract():
     # TODO
     return "Text response will make up a sol file"
 
 
 @generator.route('/deploy/contract')
-def generate_contract():
+def deploy_contract():
     # TODO
     return make_response(jsonify({"Deployed":False}),200)

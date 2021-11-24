@@ -28,7 +28,7 @@ def stream_video(event_id):
     return render_template('index.html',event_id=event_id)
 
 
-@streaming.route('/V1/raw/latest/<event_id>')
+@streaming.route('/V1/latest/<event_id>')
 def latest_entries(event_id):
     entry = Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).first()
     payload = {
@@ -38,7 +38,7 @@ def latest_entries(event_id):
     return make_response(jsonify(payload),200)
 
 @streaming.route('/V1/raw/latest/<event_id>')
-def latest_entries(event_id):
+def latest_entries_raw(event_id):
     payload = {
         "entries":[ e.json() for e in 
             Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).limit(5)
@@ -47,7 +47,7 @@ def latest_entries(event_id):
     return make_response(jsonify(payload),200)
 
 @streaming.route('/V1/raw/after/<date>/<event_id>')
-def after_entries(event_id,date):
+def after_entries_raw(event_id,date):
     payload = {
         "entries":[ e.json() for e in 
             Entry.query.filter(Entry.event_id==event_id,Entry.timestamp>date).order_by(Entry.timestamp.desc()).limit(5)
@@ -57,7 +57,7 @@ def after_entries(event_id,date):
 
 
 @streaming.route('/V1/raw/before/<date>/<event_id>')
-def before_entries(event_id,date):
+def before_entries_raw(event_id,date):
     payload = {
         "entries":[ e.json() for e in 
             Entry.query.filter(Entry.event_id==event_id,Entry.timestamp<date).order_by(Entry.timestamp.desc()).limit(5)
@@ -67,7 +67,7 @@ def before_entries(event_id,date):
 
 
 @streaming.route('/V1/raw/between/<date1>/<date2>/<event_id>')
-def between_entries(event_id,date1,date2):
+def between_entries_raw(event_id,date1,date2):
     payload = {
         "entries":[ e.json() for e in 
             Entry.query.filter(Entry.event_id==event_id,Entry.timestamp<date1,Entry.timestamp>date2).order_by(Entry.timestamp.desc()).limit(5)
