@@ -6,6 +6,7 @@ from flask_socketio import emit
 # from server.blueprints.main.views import main
 from server.blueprints.main.time_handler import img_to_bin
 from server.blueprints.main.data_manager import save_event_record
+from server.blueprints.main.confirmation_handler import get_confirmations
 from flask_cors import CORS
 from PIL import Image
 from io import BytesIO 
@@ -26,7 +27,17 @@ def view_timebox():
 def stream_video(event_id):
     return render_template('index.html',event_id=event_id)
 
-@streaming.route('/V1/latest/<event_id>')
+
+@streaming.route('/V1/raw/latest/<event_id>')
+def latest_entries(event_id):
+    entry = Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).first()
+    payload = {
+        "data":entry.data,
+        "confirmations": get_confirmations(entry,event_id)
+    }
+    return make_response(jsonify(payload),200)
+
+@streaming.route('/V1/raw/latest/<event_id>')
 def latest_entries(event_id):
     payload = {
         "entries":[ e.json() for e in 
@@ -35,7 +46,7 @@ def latest_entries(event_id):
         }
     return make_response(jsonify(payload),200)
 
-@streaming.route('/V1/after/<date>/<event_id>')
+@streaming.route('/V1/raw/after/<date>/<event_id>')
 def after_entries(event_id,date):
     payload = {
         "entries":[ e.json() for e in 
@@ -45,7 +56,7 @@ def after_entries(event_id,date):
     return make_response(jsonify(payload),200)
 
 
-@streaming.route('/V1/before/<date>/<event_id>')
+@streaming.route('/V1/raw/before/<date>/<event_id>')
 def before_entries(event_id,date):
     payload = {
         "entries":[ e.json() for e in 
@@ -55,7 +66,7 @@ def before_entries(event_id,date):
     return make_response(jsonify(payload),200)
 
 
-@streaming.route('/V1/between/<date1>/<date2>/<event_id>')
+@streaming.route('/V1/raw/between/<date1>/<date2>/<event_id>')
 def between_entries(event_id,date1,date2):
     payload = {
         "entries":[ e.json() for e in 
@@ -70,6 +81,7 @@ def between_entries(event_id,date1,date2):
 # RT require x confirmations
 
 
+# TODO rate limit the frames as they come in, so there are not big chunks of time with 100+ entries
 @socketio.on('VideoStreamIn', namespace='/iris')
 def stream_in(data):
     print("VIDEO STREAM RECIEVED")
