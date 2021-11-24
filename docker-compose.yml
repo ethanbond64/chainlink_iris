@@ -25,15 +25,15 @@ services:
     ports:
       - '8000:8000'
 
-  # frontend:
-  #   build: './chiafrontend'
-  #   command: npm run start
-  #   stdin_open: true
-  #   ports:
-  #     - '3000:3000'
-  #   volumes:
-  #     - './chiafrontend/:/chiafrontend'
-  #     - '/chiafrontend/node_modules'
+  frontend:
+    build: './frontend'
+    command: npm run start
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    volumes:
+      - './frontend/:/frontend'
+      - '/frontend/node_modules'
 
   celery:
     build: backend/.
