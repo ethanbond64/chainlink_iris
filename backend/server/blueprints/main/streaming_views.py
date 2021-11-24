@@ -16,7 +16,6 @@ import datetime
 streaming = Blueprint('streaming', __name__,template_folder='templates')
 CORS(streaming,origins="http://localhost:3000")
 
-
 # Time authenticator route
 @streaming.route('/timebox',methods=['GET'])
 def view_timebox():
@@ -29,8 +28,41 @@ def stream_video(event_id):
 
 @streaming.route('/V1/latest/<event_id>')
 def latest_entries(event_id):
-    payload = {"entries":[e.json() for e in Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).limit(5)]}
+    payload = {
+        "entries":[ e.json() for e in 
+            Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).limit(5)
+            ]
+        }
     return make_response(jsonify(payload),200)
+
+@streaming.route('/V1/after/<date>/<event_id>')
+def after_entries(event_id,date):
+    payload = {
+        "entries":[ e.json() for e in 
+            Entry.query.filter(Entry.event_id==event_id,Entry.timestamp>date).order_by(Entry.timestamp.desc()).limit(5)
+            ]
+        }
+    return make_response(jsonify(payload),200)
+
+
+@streaming.route('/V1/before/<date>/<event_id>')
+def before_entries(event_id,date):
+    payload = {
+        "entries":[ e.json() for e in 
+            Entry.query.filter(Entry.event_id==event_id,Entry.timestamp<date).order_by(Entry.timestamp.desc()).limit(5)
+            ]
+        }
+    return make_response(jsonify(payload),200)
+
+
+@streaming.route('/V1/between/<date1>/<date2>/<event_id>')
+def between_entries(event_id,date1,date2):
+    payload = {
+        "entries":[ e.json() for e in 
+            Entry.query.filter(Entry.event_id==event_id,Entry.timestamp<date1,Entry.timestamp>date2).order_by(Entry.timestamp.desc()).limit(5)
+            ]
+        }
+    return make_response(jsonify({}),200)
 
 # TODO 
 # RT all between timestamps
