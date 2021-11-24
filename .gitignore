@@ -8,3 +8,5 @@ backend/server/.DS_Store
 *.env
 .env
 
+backend/server/blueprints/main/generated_sol/*
+!backend/server/blueprints/main/generated_sol/placeholder.sol

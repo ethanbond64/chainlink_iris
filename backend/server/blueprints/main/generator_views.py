@@ -13,6 +13,12 @@ def generate_contract():
     return make_response(jsonify({"Generated":False}),200)
 
 
+@generator.route('/view/contract')
+def generate_contract():
+    # TODO
+    return "Text response will make up a sol file"
+
+
 @generator.route('/deploy/contract')
 def generate_contract():
     # TODO

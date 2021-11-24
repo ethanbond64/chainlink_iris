@@ -36,10 +36,14 @@ class Entry(BaseModel,db.Model):
     device_signature = db.Column(db.String(128))
 
 
-# class Event_Entry_Xref(BaseModel,db.Model):
 
-#     __tablename__ = 'event_entry_xref'
+class Contract(BaseModel,db.Model):
 
-#     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), primary_key=True, unique=False)
-#     entry_id = db.Column(db.Integer, db.ForeignKey('entries.id'), primary_key=True, unique=False)
-    
+    __tablename__ = "contracts"
+
+    id = db.Column(db.Integer, primary_key=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+
+    env_json = db.Column(JSON)
+    filename = db.Column(db.String(100))
+    deployed = db.Column(db.Boolean,default=False)
