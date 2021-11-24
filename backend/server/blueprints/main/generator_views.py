@@ -7,6 +7,7 @@ from flask_cors import CORS
 generator = Blueprint('generator', __name__,template_folder='templates')
 CORS(generator,origins="http://localhost:3000")
 
+SOL_PATH = "backend/server/blueprints/main/generated_sol"
 
 @generator.route('/generate/contract', methods=["POST"])
 def generate_contract():
@@ -22,10 +23,26 @@ def generate_contract():
     return make_response(jsonify({"Generated":False}),200)
 
 
-@generator.route('/view/contract')
-def view_contract():
-    # TODO
-    return "Text response will make up a sol file"
+@generator.route('/view/contract/<c_id>',methods=["GET"])
+def view_contract(c_id):
+    contract = Contract.query.filter(Contract.id==c_id).first()
+    if contract is not None:
+    
+        fname = SOL_PATH+contract.filename
+        sol = """ """
+
+        try:
+            with open(fname,"r") as file:
+                sol = file.read()
+            
+            resp = make_response(sol, 200)
+            resp.mimetype = "text/plain"
+
+            return resp
+        
+        except:
+            return make_response("Error finding file", 500)
+    return make_response(jsonify({"Error":"Invalid contract id"}),200)
 
 
 @generator.route('/deploy/contract')
