@@ -2,7 +2,7 @@ from server.app import create_celery_app
 
 celery = create_celery_app()
 
-
+# TODO enqueue frames to be handled by the worker instead
 # @celery.task()
 # def predeploy_coin_async(id_arg):
 #     # time.sleep(2)
