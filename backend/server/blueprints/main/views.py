@@ -34,6 +34,7 @@ def create_entry():
     return make_response(jsonify(resp),200)
 
 
+# NOTE this is for non video data, posted in manually, not streamed
 @main.route('/create/entry',methods=['POST'])
 def create_event():
     resp = {"success":False}

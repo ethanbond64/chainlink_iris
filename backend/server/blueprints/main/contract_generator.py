@@ -14,12 +14,15 @@ class ContractWriter:
 
     # Tie it all together
     def write(self):
+        # TODO
         return
     
     # save the file as a real sol file in a gen file 
     def fill_template(self):
+        # TODO
         return
 
     # Optional getter to view the text
     def get_contract_text():
+        # TODO
         return

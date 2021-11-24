@@ -75,12 +75,6 @@ def between_entries_raw(event_id,date1,date2):
         }
     return make_response(jsonify({}),200)
 
-# TODO 
-# RT all between timestamps
-# RT specfic timestamp
-# RT require x confirmations
-
-
 # TODO rate limit the frames as they come in, so there are not big chunks of time with 100+ entries
 @socketio.on('VideoStreamIn', namespace='/iris')
 def stream_in(data):
@@ -95,7 +89,6 @@ def stream_in(data):
     event = Event.query.filter(Event.id==event_id).first()
 
     if event is None :
-        # TODO handle errors via socketIO
         emit('VideoStreamReceived', {'Valid': False}, namespace='/iris')
     # Process and save data
     img = stringToImage(data_url.split(",")[1])

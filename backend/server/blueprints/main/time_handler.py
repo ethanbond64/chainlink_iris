@@ -43,6 +43,7 @@ def generate_time_id_map():
         pickle.dump(int_list, f, protocol=pickle.HIGHEST_PROTOCOL)
 
 def img_to_bin(img):
+    # TODO make this not suck
     blurred = GaussianBlur(img, (5, 5), 0) # Blur
     canny = Canny(blurred, 30, 150) # Canny
     contours, _ = findContours(canny,RETR_TREE,CHAIN_APPROX_SIMPLE)

@@ -22,6 +22,7 @@ def save_event_record(img, device_id, event: Event):
     except:
         auth_timestamp = datetime.datetime.now()
 
+    # TODO create data policies and actually use them
     # Use data policy to get data
     generated_json = {"data":"fake"}
 

@@ -1,10 +1,6 @@
 
 from server.blueprints.main.models import Entry
 
-
-# TODO
-# Method that compiles the latest state records and confirms the number of device signatures
-
 # By single entry? Or include the query into this method
 def get_confirmations(entry: Entry,event_id):
 
