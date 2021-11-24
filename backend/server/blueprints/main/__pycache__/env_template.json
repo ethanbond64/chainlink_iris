@@ -1,0 +1,6 @@
+{
+    "env": {
+        "main_fig_type":"unint256",
+        "decimal_handler":"1000"
+    }
+}
