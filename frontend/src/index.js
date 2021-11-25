@@ -12,7 +12,7 @@ function Routing() {
     <Router history={history}>
       <div className={`lg:container lg:mx-auto h-screen`}>
         <Routes>
-          <Route exact path="/" render={() => (<App />)} />
+          <Route exact path="/" element={<App />} />
         </Routes>
       </div>
     </Router>
