@@ -1,4 +1,5 @@
 import logo from './imgs/IrisLogoBetter.png';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
 
@@ -7,7 +8,7 @@ function Navbar() {
             <img src={logo} className={`h-30`} alt="Iris Logo" />
             <div className={`mt-8 absolute inset-y-0 right-0`}>
                 <a className={`inline-block border rounded py-1 px-3 bg-indigo-900 text-white mr-4`}>
-                    New Event +
+                    <Link to="/create">New Event +</Link>
                 </a>
                 <a className={`inline-block border rounded py-1 px-3 bg-indigo-900 text-white mr-4`}>
                     Help
