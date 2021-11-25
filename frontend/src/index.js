@@ -1,12 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import history from './utils/History';
 import './styles/index.css';
 import App from './App';
 import reportWebVitals from './utils/reportWebVitals';
 
+
+function Routing() {
+  return (
+    <Router history={history}>
+      <div className={`lg:container lg:mx-auto h-screen`}>
+        <Routes>
+          <Route exact path="/" render={() => (<App />)} />
+        </Routes>
+      </div>
+    </Router>
+    );
+  }
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Routing />
   </React.StrictMode>,
   document.getElementById('root')
 );
