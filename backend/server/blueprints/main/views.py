@@ -2,6 +2,7 @@ from flask import  request, Blueprint, jsonify, make_response
 from server.blueprints.main.models import Event, Entry
 from flask_cors import CORS
 import datetime
+import json
 
 
 main = Blueprint('main', __name__,template_folder='templates')
@@ -26,7 +27,10 @@ def create_entry():
     if request.form.get("name") is not None:
         event = Event(
                 name=request.form.get("name"),
-                expiration=read_js_date(request.form.get("expiration_date")))
+                about=request.form.get("description"),
+                start_time=request.form.get("start"),
+                expiration=request.form.get("end"),
+                dataPolicy=json.loads(request.form.get("policies")))
 
         event.save()
 

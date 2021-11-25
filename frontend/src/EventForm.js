@@ -62,13 +62,41 @@ function EventForm(){
 
     }
 
+
+    
     function saveEvent() {
         console.log("name: ", name);
         console.log("desc: ",description);
         console.log("start: ", start);
         console.log("end: ", end);
         console.log("policy: ",dataPolicy);
+
+        var formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("start", start);
+        formData.append("end", end);
+        formData.append("policies", JSON.stringify({"policies":dataPolicy}));
+
+
+        fetch("http://localhost:8000/create/event", {
+            // mode: 'no-cors',
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+            },
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(json => {
+                    window.location = "http://localhost:3000/";
+                });
+            }
+        });
     }
+
+
 
     return (
         <div className={`mx-auto h-screen`}>
@@ -78,7 +106,7 @@ function EventForm(){
                         placeholder="Event Name" onChange={onChangeName} />
                     <button className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded float-right inline-block`} 
                         onClick={saveEvent} >
-                        <Link to="/" onClick={saveEvent} >Save</Link>
+                       Save
                     </button>
                 </div>
                 <textarea class="m-auto mt-4 mb-4 w-5/6 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4"
