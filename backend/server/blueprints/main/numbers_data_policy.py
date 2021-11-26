@@ -61,6 +61,10 @@ def filter_polygons(contours):
     return polygons
 
 def read_text(img):
+
+    text = pytesseract.image_to_string(img, config=('-l eng --oem 1 --psm 3'))
+    return text
+
     img = cv2.resize(img, (600, 400))
     filename = 'tempimg.png'
     cv2.imwrite(filename, img)

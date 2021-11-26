@@ -4,7 +4,6 @@ from server.blueprints.main.models import Event, Entry
 from server.utils.extensions import socketio
 from flask_socketio import emit
 # from server.blueprints.main.views import main
-from server.blueprints.main.time_handler import img_to_bin
 from server.blueprints.main.data_manager import save_event_record
 from server.blueprints.main.confirmation_handler import get_confirmations
 from flask_cors import CORS

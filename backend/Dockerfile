@@ -6,6 +6,7 @@ RUN apt-get update
 RUN apt-get install -qq -y \
     build-essential libpq-dev --no-install-recommends
 RUN apt-get install ffmpeg libsm6 libxext6  -y
+RUN apt-get install tesseract-ocr -y
 
 
 ENV SERVER_PATH /server
