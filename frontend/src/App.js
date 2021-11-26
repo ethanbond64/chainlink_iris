@@ -25,11 +25,9 @@ function App() {
   return (
     <div>
       <div className={`grid grid-cols-3 gap-4`}>
-        {
-          events.map((event) => 
+        {events.map((event) => 
             <EventCard name={event.name} description={event.about} id={event.id} />
-          )
-        }
+        )}
       </div>
       <footer className={`text-center`}>
       </footer>

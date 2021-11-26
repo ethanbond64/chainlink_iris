@@ -61,3 +61,10 @@ def get_entries(event):
 
     return make_response(jsonify(resp),200)
 
+@main.route('/get/contracts/<event>',methods=['GET'])
+def get_contracts(event):
+
+    # entries = Entry.query.filter(Entry.event_id==event).order_by(Entry.created_on.desc()).all()
+    # resp = {"entries":[entry.json() for entry in entries]}
+
+    return make_response(jsonify({"contracts":[1,2,3]}),200)

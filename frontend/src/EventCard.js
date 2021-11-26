@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 function EventCard(props) {
 
@@ -18,7 +18,7 @@ function EventCard(props) {
                         Time Auth
                     </a>
                     <div className={`inline-block border rounded py-1 px-3 bg-blue-400 text-white`} >
-                        Contracts
+                        <Link to={`/contracts/${props.id}`}>Contracts</Link>
                     </div>
                 </div>
             </div>

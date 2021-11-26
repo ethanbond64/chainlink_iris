@@ -7,6 +7,7 @@ import App from './App';
 import reportWebVitals from './utils/reportWebVitals';
 import Navbar from './Navbar';
 import EventForm from './EventForm';
+import Contracts from './Contracts';
 
 function Routing() {
   return (
@@ -16,6 +17,7 @@ function Routing() {
         <Routes>
           <Route exact path="/" element={<App />} />
           <Route exact path="/create" element={<EventForm />} />
+          <Route exact path="/contracts/:event_id" element={<Contracts />} />
         </Routes>
       </div>
     </Router>
