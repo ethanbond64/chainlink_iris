@@ -13,6 +13,7 @@ from io import BytesIO
 import base64
 import numpy as np
 import datetime
+import cv2
 
 streaming = Blueprint('streaming', __name__,template_folder='templates')
 CORS(streaming,origins="http://localhost:3000")
@@ -30,7 +31,7 @@ def stream_video(event_id):
 
 @streaming.route('/V1/latest/<event_id>')
 def latest_entries(event_id):
-    entry = Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).first()
+    entry = Entry.query.filter(Entry.event_id==event_id,Entry.timestamp!=None).order_by(Entry.timestamp.desc()).first()
     payload = {
         "data":entry.data,
         "confirmations": get_confirmations(entry,event_id)
@@ -41,7 +42,7 @@ def latest_entries(event_id):
 def latest_entries_raw(event_id):
     payload = {
         "entries":[ e.json() for e in 
-            Entry.query.filter(Entry.event_id==event_id).order_by(Entry.timestamp.desc()).limit(5)
+            Entry.query.filter(Entry.event_id==event_id,Entry.timestamp!=None).order_by(Entry.timestamp.desc()).limit(5)
             ]
         }
     return make_response(jsonify(payload),200)
@@ -128,8 +129,8 @@ def test_connect():
     print("SOCKETIO CONNECTED")
 
 def stringToImage(base64_string):
-    imgdata = base64.b64decode(base64_string)
-    return np.array(Image.open(BytesIO(imgdata)))
+    imgdata = np.fromstring(base64.b64decode(base64_string), np.uint8)
+    return cv2.imdecode(imgdata, cv2.IMREAD_COLOR)
 
 
 def read_js_date(datestring):

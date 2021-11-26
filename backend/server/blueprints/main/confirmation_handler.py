@@ -12,13 +12,12 @@ def get_confirmations(entry: Entry,event_id):
     # order by device signature, manually filter outside of query
     entries = Entry.query.filter(
                 Entry.event_id==event_id,
-                Entry.timestamp>=(entry.timestamp-tolerance),
-                Entry.timestamp<=(entry.timestamp+tolerance),
+                Entry.timestamp==entry.timestamp,
                 Entry.device_signature!=entry.device_signature
             ).order_by(Entry.device_signature).limit(10)
     
 
-    confirmed_count = 0
+    confirmed_count = 1
     seen_signatures = []
     for ent in entries:
         if ent.device_signature not in seen_signatures:

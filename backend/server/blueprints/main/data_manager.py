@@ -2,7 +2,7 @@
 import datetime
 from os import device_encoding
 from server.blueprints.main.models import Event, Entry
-
+from server.blueprints.main.numbers_data_policy import read_text
 from server.blueprints.main.time_handler import img_to_bin, get_entry_timestamp
 
 def save_event_record(img, device_id, event: Event):
@@ -23,9 +23,13 @@ def save_event_record(img, device_id, event: Event):
     except:
         auth_timestamp = datetime.datetime.now()
 
-    # TODO create data policies and actually use them
-    # Use data policy to get data
-    generated_json = {"data":"fake"}
+    # TODO check other data policies
+    # Use data policy to get data    
+    try:    
+        found_text = read_text(img)
+    except:
+        found_text = "Null"
+    generated_json = {"text":found_text}
 
     # save an entry for the event
     entry = Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id,device_signature=device_id)
