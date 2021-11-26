@@ -8,17 +8,18 @@ generator = Blueprint('generator', __name__,template_folder='templates')
 CORS(generator,origins="http://localhost:3000")
 
 SOL_PATH = "backend/server/blueprints/main/generated_sol"
+GLOBAL_ENV_JSON = {"decimal_handler":"1","":""}
 
 @generator.route('/generate/contract', methods=["POST"])
 def generate_contract():
 
-    env_json = request.form.get("env_json")
+    # env_json = request.form.get("env_json")
     event_id = request.form.get("entry_id")
-    name = request.form.get("name")
+    name = request.form.get("name","generated")
 
-    contract = Contract(event_id=event_id,env_json=env_json).save()
+    contract = Contract(event_id=event_id).save()
 
-    contract.filename = ContractWriter(name,event_id,env_json).write()
+    contract.filename = ContractWriter(name,event_id).write()
 
     return make_response(jsonify({"Generated":False}),200)
 

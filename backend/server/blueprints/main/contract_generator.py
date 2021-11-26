@@ -11,7 +11,8 @@ class ContractWriter:
         self.event_id = event_id
         # JSON blob that contains sensitive data
         # TODO learn how to handle sensitive data in smart contract
-        self.env = env
+        with open('env_template.json','r') as template:
+            self.env = template["env"]
 
         self.base_dir = os.path.dirname(__file__)
         self.filename = ""
@@ -33,7 +34,7 @@ class ContractWriter:
     def fill_template(self):
         contents = None
         
-        with open('env_template.json','r') as template:
+        with open('generated_sol/iris_contract_template.sol','r') as template:
             contents = template.read()
 
         for field in self.env:

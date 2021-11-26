@@ -29,10 +29,10 @@ function Contract(props) {
             <button className={`bg-red-500 hover:bg-red-700 ml-3 mt-6 text-white font-bold py-2 px-4 rounded float-right inline-block`}>
                 Delete
             </button>
-            <button className={`bg-blue-500 hover:bg-blue-700 ml-3 mt-6 text-white font-bold py-2 px-4 rounded float-right inline-block`}>
+            <button className={`bg-indigo-700 hover:bg-indigo-900 ml-3 mt-6 text-white font-bold py-2 px-4 rounded float-right inline-block`}>
                 View Source
             </button>
-            <button className={`bg-blue-500 hover:bg-blue-700 ml-3 mt-6 text-white font-bold py-2 px-4 rounded float-right inline-block`}>
+            <button className={`bg-indigo-700 hover:bg-indigo-900 ml-3 mt-6 text-white font-bold py-2 px-4 rounded float-right inline-block`}>
                 Deploy
             </button>
 
