@@ -9,7 +9,8 @@ def save_event_record(img, device_id, event: Event):
 
     # Check event is still valid
     if event.expiration < datetime.datetime.now() or event.start_time > datetime.datetime.now():
-        return
+        print("Entry Expired")
+        # return "Entry Expired"
     
     # get event data policy
     policy = event.dataPolicy
@@ -27,4 +28,6 @@ def save_event_record(img, device_id, event: Event):
     generated_json = {"data":"fake"}
 
     # save an entry for the event
-    Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id,device_signature=device_id).save()
+    entry = Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id,device_signature=device_id)
+    entry.save()
+    return "Entry Saved"

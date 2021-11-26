@@ -1,5 +1,5 @@
 
-from flask import render_template, Blueprint, make_response, jsonify
+from flask import json, render_template, Blueprint, make_response, jsonify, request
 from server.blueprints.main.models import Event, Entry
 from server.utils.extensions import socketio
 from flask_socketio import emit
@@ -76,25 +76,52 @@ def between_entries_raw(event_id,date1,date2):
     return make_response(jsonify({}),200)
 
 # TODO rate limit the frames as they come in, so there are not big chunks of time with 100+ entries
-@socketio.on('VideoStreamIn', namespace='/iris')
-def stream_in(data):
+@streaming.route('/stream/data',methods=["POST"])
+def stream_in():
     print("VIDEO STREAM RECIEVED")
-    print(data)
+    # print(request.form.json)
     
-    data_url = data["DataURL"]
-    event_id = data["EventID"]
-    device_id = data["DeviceID"]
+    data_url = request.form.get("DataURL")
+    event_id = request.form.get("EventID")
+    device_id = request.form.get("DeviceID")
 
+    # try:
     # get event
     event = Event.query.filter(Event.id==event_id).first()
 
     if event is None :
-        emit('VideoStreamReceived', {'Valid': False}, namespace='/iris')
+        return make_response("UNABLE TO SAVE ENTRY",200)
+
     # Process and save data
     img = stringToImage(data_url.split(",")[1])
-    save_event_record(img,device_id,event)
+    resp = save_event_record(img,device_id,event)
+    print("MAde it to the returns statement")
+    print("REsp: ",resp)
+    return make_response("MID",200) 
+    # except:
+        
+
+    return make_response("UNABLE TO SAVE ENTRY",200)
+
+# @socketio.on('VideoStreamIn', namespace='/iris')
+# def stream_in(data):
+#     print("VIDEO STREAM RECIEVED")
+#     print(data)
+    
+#     data_url = data["DataURL"]
+#     event_id = data["EventID"]
+#     device_id = data["DeviceID"]
+
+#     # get event
+#     event = Event.query.filter(Event.id==event_id).first()
+
+#     if event is None :
+#         emit('VideoStreamReceived', {'Valid': False}, namespace='/iris')
+#     # Process and save data
+#     img = stringToImage(data_url.split(",")[1])
+#     save_event_record(img,device_id,event)
  
-    emit('VideoStreamReceived', {'Valid': True}, namespace='/iris')
+#     emit('VideoStreamReceived', {'Valid': True}, namespace='/iris')
 
 @socketio.on('connect', namespace='/iris')
 def test_connect():

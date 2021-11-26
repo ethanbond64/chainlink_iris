@@ -74,7 +74,7 @@ fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
         photo = document.getElementById('photo');
         var localMediaStream = null;
 
-        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        // var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
         function sendSnapshot() {
             if (!localMediaStream) {
@@ -88,17 +88,41 @@ fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
                 "EventID": parseInt(window.location.pathname.split('/')[2]),
                 "DeviceID": fingerprint
             };
-            socket.emit('VideoStreamIn', payload);
 
-            // var img = new Image();
-            socket.on('VideoStreamReceived', function (data) {
-                console.log("RESPONSE", data);
+            let formData = new FormData();
+            formData.append("DataURL", canvas.toDataURL());
+            formData.append("EventID", parseInt(window.location.pathname.split('/')[2]))
+            formData.append("DeviceID",fingerprint);
+            
+            
+            fetch("http://localhost:8000/stream/data", {
+                // mode: 'no-cors',
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                },
+                body: formData
+
+            }).then(response => {
+                if (response.ok) {
+                    response.json().then(json => {
+                        console.log(json);
+                    });
+                }
             });
         }
 
-        socket.on('connect', function () {
-            console.log('Connected!');
-        });
+            // socket.emit('VideoStreamIn', payload);
+
+            // var img = new Image();
+            // socket.on('VideoStreamReceived', function (data) {
+            //     console.log("RESPONSE", data);
+            // });
+        // }
+
+        // socket.on('connect', function () {
+        //     console.log('Connected!');
+        // });
 
         var constraints = {
             video: {
@@ -113,7 +137,8 @@ fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
 
             setInterval(function () {
                 sendSnapshot();
-            }, 800);
+            }, 1000);
+
         }).catch(function (error) {
             console.log(error);
         });
