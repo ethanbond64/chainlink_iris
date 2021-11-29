@@ -58,9 +58,7 @@ def filter_polygons(contours):
 
 def read_text(img):
     img = cv2.resize(img, (600, 400))
-    filename = 'tempimg.png'
-    cv2.imwrite(filename, img)
-
+    
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.bilateralFilter(gray, 12, 20, 20)
     edges = cv2.Canny(gray, 30, 170)

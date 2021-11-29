@@ -62,12 +62,10 @@ def filter_polygons(contours):
 
 def read_text(img):
 
-    text = pytesseract.image_to_string(img, config=('-l eng --oem 1 --psm 3'))
-    return text
+    # text = pytesseract.image_to_string(img, config=('--psm 13'))
+    # return text.
 
     img = cv2.resize(img, (600, 400))
-    filename = 'tempimg.png'
-    cv2.imwrite(filename, img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.bilateralFilter(gray, 12, 20, 20)
@@ -88,4 +86,4 @@ def read_text(img):
     if corners is None or len(corners) == 0:
         return ""
 
-    return text
+    return text.strip()
