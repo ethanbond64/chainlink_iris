@@ -32,8 +32,11 @@ def stream_video(event_id):
 def latest_entries(event_id):
     entry = Entry.query.filter(Entry.event_id==event_id,Entry.timestamp!=None).order_by(Entry.timestamp.desc()).first()
     payload = {
-        "data":entry.data,
-        "confirmations": get_confirmations(entry,event_id)
+        "data": {
+            "value": entry.data,
+            "timestamp": entry.timestamp,
+            "confirmations": get_confirmations(entry,event_id)
+        }
     }
     return make_response(jsonify(payload),200)
 

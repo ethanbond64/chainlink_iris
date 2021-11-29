@@ -32,6 +32,7 @@ def save_event_record(img, device_id, event: Event):
     generated_json = {"text":found_text}
 
     # save an entry for the event
-    entry = Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id,device_signature=device_id)
-    entry.save()
+    if len(found_text) > 0:
+        entry = Entry(data=generated_json,timestamp=auth_timestamp,event_id=event.id,device_signature=device_id)
+        entry.save()
     return found_text
