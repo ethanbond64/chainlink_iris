@@ -129,25 +129,25 @@ function EventForm(){
                         <div>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox" value="policy 1" onChange={onChangePolicy} />
-                                <span class="ml-2">Policy 1</span>
+                                <span class="ml-2">Text Policy - Read all text</span>
                             </label>
                         </div>
                         <div>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox" value="policy 2" onChange={onChangePolicy} />
-                                <span class="ml-2">Policy 2</span>
+                                <span class="ml-2">Scoreboard Policy - Look for two parallel numbers</span>
                             </label>
                         </div>
                         <div>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox" value="policy 3" onChange={onChangePolicy} />
-                                <span class="ml-2">Policy 3</span>
+                                <span class="ml-2">Counting - Count all objects in the frame </span>
                             </label>
                         </div>
                         <div>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox" value="Custom" onChange={onChangePolicy} />
-                                <span class="ml-2">Custom</span>
+                                <span class="ml-2">Custom - Create a custom data policy</span>
                             </label>
                         </div>
                     </div>

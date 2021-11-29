@@ -5,11 +5,10 @@
     <meta charset="utf-8">
     <meta content="ugh, hi." name="description">
     <meta content="Makeup Webcam" name="title">
-    <title>Face Detection</title>
+    <title>Chainlink Iris Stream</title>
     <style>
         #container {
             margin: 0px auto;
-            border: 20px #5d34a5 solid;
         }
 
         #videoElement {
@@ -23,14 +22,16 @@
             margin: auto;
             width: 640px;
             height: 480px;
-            border: 1px solid black;
+            border: 5px #5d34a5 solid;
         }
     </style>
 </head>
 
 <body>
+    <img src="{{ url_for('static',filename='IrisLogoBetter.png') }}" alt="Chainlink Iris Logo">
+    <h1 style="float: right;font-family: Helvetica, Sans-Serif;margin-right: 30px;margin-top: 30px;" >Stream for: {{ event_name }}</h1>
     <div id="container">
-        <div>
+        <div style="text-align: center;">   
             <video autoplay="true" id="videoElement"></video>
             <canvas id="canvasElement"></canvas>
         </div>

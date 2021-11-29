@@ -25,7 +25,10 @@ def view_timebox():
 # Video frame route
 @streaming.route('/stream/<event_id>',methods=['GET'])
 def stream_video(event_id):
-    return render_template('index.html',event_id=event_id)
+
+    event = Event.query.filter(Event.id==event_id).first()
+
+    return render_template('index.html',event_name=event.name)
 
 
 @streaming.route('/V1/latest/<event_id>')
@@ -35,6 +38,7 @@ def latest_entries(event_id):
         "data": {
             "value": entry.data,
             "timestamp": entry.timestamp,
+            "timeauth": False,
             "confirmations": get_confirmations(entry,event_id)
         }
     }
