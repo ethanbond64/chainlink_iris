@@ -3,6 +3,20 @@
 ## Overview
 Chainlink Iris is a no code tool that will allow people to use computer vision to create custom, video based data feeds to be read by chainlink in smartcontracts.
 
+&nbsp;
+## Installation and dependencies
+To run the application locally, you will need Docker and Docker Compose installed on your computer. If you don't have these already installed, I recommend installing Docker Desktop, which includes both Docker and Docker Compose.
+
+Install Docker Desktop: https://docs.docker.com/get-docker/
+
+## Running the application
+Navigate to the root directory of the project at the command line and run this command: 
+
+` docker-compose up `
+
+The server will take a few minutes to build and start the first time you run it. Once its running, you should be able to view it in a browser at http://localhost:3000/ 
+
+&nbsp;
 ## Problem it solves
 All off chain data fed to chainlink must come from an API of some sort. Not everyone has access to hardware/people that are able to convert data about real life events into digital representation.  
 
