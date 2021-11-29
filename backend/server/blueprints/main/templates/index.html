@@ -9,7 +9,7 @@
     <style>
         #container {
             margin: 0px auto;
-            border: 10px #333 solid;
+            border: 20px #5d34a5 solid;
         }
 
         #videoElement {
@@ -19,22 +19,10 @@
             background-color: #666;
         }
 
-        #imageElement {
-            width: 640px;
-            height: 480px;
-            background-color: #666;
-        }
-
         #canvasElement {
+            margin: auto;
             width: 640px;
             height: 480px;
-            border: 1px solid black;
-        }
-
-        #photo {
-            width: 640px;
-            height: 480px;
-
             border: 1px solid black;
         }
     </style>
@@ -45,15 +33,11 @@
         <div>
             <video autoplay="true" id="videoElement"></video>
             <canvas id="canvasElement"></canvas>
-
-            <img id="photo">
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
-        integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 
 </body>
@@ -71,10 +55,7 @@ fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
         let video = document.querySelector("#videoElement");
         let canvas = document.querySelector("#canvasElement");
         let ctx = canvas.getContext('2d');
-        photo = document.getElementById('photo');
         var localMediaStream = null;
-
-        // var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
         function sendSnapshot() {
             if (!localMediaStream) {
@@ -111,19 +92,6 @@ fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
                 }
             });
         }
-
-            // socket.emit('VideoStreamIn', payload);
-
-            // var img = new Image();
-            // socket.on('VideoStreamReceived', function (data) {
-            //     console.log("RESPONSE", data);
-            // });
-        // }
-
-        // socket.on('connect', function () {
-        //     console.log('Connected!');
-        // });
-
         var constraints = {
             video: {
                 width: { min: 640 },
@@ -137,7 +105,7 @@ fpPromise.then(fp => fp.get()).then(result => {fingerprint = result.visitorId});
 
             setInterval(function () {
                 sendSnapshot();
-            }, 1000);
+            }, 2000);
 
         }).catch(function (error) {
             console.log(error);
