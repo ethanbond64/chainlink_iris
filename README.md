@@ -1,5 +1,7 @@
 # Chainlink Iris
 
+* THIS IS ONLY THE PUBLIC PORTION OF THIS PROJECT
+
 ## Overview
 Chainlink Iris is a no code tool that will allow people to use computer vision to create custom, video based data feeds to be read by chainlink in smartcontracts.
 
